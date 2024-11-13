@@ -1,0 +1,33 @@
+<!-- templates/questions.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Bureau Update</title>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'js/scripts.js' %}"></script>
+</head>
+<body>
+<button id="start-quiz">Start Quiz</button>
+
+<div id="question-modal" class="modal">
+<div class="modal-content">
+<span class="close">&times;</span>
+<h2 id="question-text"></h2>
+<form id="response-form">
+<input type="radio" name="response" value="A"> <span id="answer-a"></span><br>
+<input type="radio" name="response" value="B"> <span id="answer-b"></span><br>
+<input type="radio" name="response" value="C"> <span id="answer-c"></span><br>
+<input type="radio" name="response" value="D"> <span id="answer-d"></span><br>
+<button type="submit">Next</button>
+</form>
+</div>
+</div>
+
+<script>
+let questions = {{ questions|safe }};
+let currentQuestionIndex = 0;
+let userResponses = [];
+
+document.getElementById('start

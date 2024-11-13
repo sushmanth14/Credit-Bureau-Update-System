@@ -1,0 +1,13 @@
+def calculate_credit_score(user_responses):
+total_score = 0
+for response in user_responses:
+question = response.question
+if response.user_response == 'A':
+total_score += question.score_a
+elif response.user_response == 'B':
+total_score += question.score_b
+elif response.user_response == 'C':
+total_score += question.score_c
+elif response.user_response == 'D':
+total_score += question.score_d
+return total_score

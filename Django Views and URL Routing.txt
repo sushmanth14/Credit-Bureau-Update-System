@@ -1,0 +1,28 @@
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from .models import Question, UserResponse
+from .utils import calculate_credit_score # Import the scoring algorithm
+
+def questions_view(request):
+questions = Question.objects.all()
+return render(request, 'questions.html', {'questions': questions})
+
+def submit_responses(request):
+if request.method == 'POST':
+user_responses = request.body.decode('utf-8')
+user_responses = json.loads(user_responses)
+
+total_score = 0
+for response in user_responses:
+question = Question.objects.get(id=response['question_id'])
+user_response = UserResponse(
+question=question,
+user_response=response['response'],
+user=request.user # Assuming user is logged in
+)
+user_response.save()
+
+total_score = calculate_credit_score(user_responses)
+
+return JsonResponse({'credit_score': total_score})
+return JsonResponse({'error': 'Invalid request'}, status=400)
